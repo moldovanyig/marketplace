@@ -11,7 +11,7 @@ export const itemController = {
     next: NextFunction
   ): Promise<void> {
     const data = await itemService
-      .postSale(req.headers, req.body)
+      .postItem(req.headers, req.body)
       .catch(error => {
         next(new HttpException(500, error.message));
       });

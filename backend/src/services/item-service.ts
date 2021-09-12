@@ -5,7 +5,7 @@ import { checkUrl } from './check-url-service';
 import { checkPrice } from './check-price-service';
 import { createErrorPromise } from './error-service';
 
-const postSale = async (
+const postItem = async (
   headers: User,
   request: SaleRequest
 ): Promise<SaleResponse | ErrorHandling> => {
@@ -81,5 +81,5 @@ const postSale = async (
 };
 
 export const itemService = {
-  postSale,
+  postItem,
 };
