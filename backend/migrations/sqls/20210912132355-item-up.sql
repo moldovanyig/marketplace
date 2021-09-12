@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS item (
   photo_url TEXT NOT NULL,
   price MEDIUMINT NOT NULL,
   sellable TINYINT(1) NULL DEFAULT 1,
-  buyers_name VARCHAR(45) NOT NULL,
+  buyers_name VARCHAR(45) NULL,
   user_id INT NOT NULL,
   PRIMARY KEY (id),
   UNIQUE INDEX id_UNIQUE (id ASC) VISIBLE,
