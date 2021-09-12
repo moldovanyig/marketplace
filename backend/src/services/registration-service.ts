@@ -44,48 +44,47 @@ const postRegistration = async (
       return createErrorPromise('Name is already taken.');
     } else {
       //posting data to db
+      return new Promise(async resolve => {
+        const saltRounds = await bcrypt.genSalt();
 
-      const saltRounds = await bcrypt.genSalt();
-
-      const hashPromise = () =>
-        new Promise((resolve, reject) => {
-          bcrypt.hash(password, saltRounds, (err, hash) => {
-            if (err) {
-              reject(err);
-            } else {
-              resolve(hash);
-            }
+        const hashPromise = () =>
+          new Promise((resolve, reject) => {
+            bcrypt.hash(password, saltRounds, (err, hash) => {
+              if (err) {
+                reject(err);
+              } else {
+                resolve(hash);
+              }
+            });
           });
+
+        const hash = await hashPromise().catch(() => {
+          throw new Error('hashing is not working');
         });
 
-      const hash = await hashPromise().catch(() => {
-        throw new Error('hashing is not working');
-      });
-
-      const addUser = await db
-        .query(`INSERT INTO user (name, password, avatar) VALUES (?, ?, ?)`, [
-          name,
-          hash,
-          avatar,
-        ])
-        .catch(error => {
-          throw new Error(`database error: ${error.message}`);
-        });
-
-      if (addUser) {
-        const getData = await db
-          .query(`SELECT id, name, avatar FROM user WHERE name = ?`, [name])
+        const addUser = await db
+          .query(`INSERT INTO user (name, password, avatar) VALUES (?, ?, ?)`, [
+            name,
+            hash,
+            avatar,
+          ])
           .catch(error => {
             throw new Error(`database error: ${error.message}`);
           });
 
-        const response: RegistrationResponse = getData
-          .results[0] as RegistrationResponse;
+        if (addUser) {
+          const getData = await db
+            .query(`SELECT id, name, avatar FROM user WHERE name = ?`, [name])
+            .catch(error => {
+              throw new Error(`database error: ${error.message}`);
+            });
 
-        return new Promise(resolve => resolve(response));
-      } else {
-        return createErrorPromise('unhandled error');
-      }
+          const response: RegistrationResponse = getData
+            .results[0] as RegistrationResponse;
+
+          resolve(response);
+        }
+      });
     }
   }
 };
