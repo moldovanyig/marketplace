@@ -1,0 +1,17 @@
+CREATE TABLE IF NOT EXISTS item (
+  id INT NOT NULL AUTO_INCREMENT,
+  title VARCHAR(45) NOT NULL,
+  description VARCHAR(255) NOT NULL,
+  photo_url TEXT NOT NULL,
+  price MEDIUMINT NOT NULL,
+  sellable TINYINT(1) NULL DEFAULT 1,
+  buyers_name VARCHAR(45) NOT NULL,
+  user_id INT NOT NULL,
+  PRIMARY KEY (id),
+  UNIQUE INDEX id_UNIQUE (id ASC) VISIBLE,
+  UNIQUE INDEX title_UNIQUE (title ASC) VISIBLE,
+  INDEX id_idx (user_id ASC) VISIBLE,
+  CONSTRAINT user_id
+    FOREIGN KEY (user_id)
+    REFERENCES user (id)
+);
