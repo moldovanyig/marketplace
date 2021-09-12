@@ -1,17 +1,18 @@
 import { db } from '../data/connection';
-import { LoginResponse, DbResult, User } from '../models';
+import { LoginResponse, DbResult, LoginRequest } from '../models';
 import config from '../config';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 
-const postLogin = async ({ name, password }: User): Promise<LoginResponse> => {
+const postLogin = async (request: LoginRequest): Promise<LoginResponse> => {
+  const { name, password } = request;
   const data = await db
     .query(`SELECT name, password FROM user WHERE name = ?;`, [name])
     .catch(error => {
       throw new Error(error.message);
     });
 
-  const result = ((data as DbResult).results as User[])[0];
+  const result = ((data as DbResult).results as LoginRequest[])[0];
 
   return new Promise((resolve, reject) => {
     if (!result) {
