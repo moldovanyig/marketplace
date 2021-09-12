@@ -1,6 +1,10 @@
 import express from 'express';
 import cors from 'cors';
-import { registrationController, loginController } from '../controllers';
+import {
+  registrationController,
+  loginController,
+  itemController,
+} from '../controllers';
 
 const router = express.Router();
 
@@ -9,5 +13,6 @@ router.use(express.json());
 
 router.post('/registration', registrationController.post);
 router.post('/login', loginController.post);
+router.post('/item', itemController.post);
 
 export default router;
