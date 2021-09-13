@@ -9,3 +9,9 @@ export interface SaleResponse {
   status: string;
   message?: string;
 }
+
+export interface Item {
+  item_id: number;
+  price: number;
+  user_id: number;
+}

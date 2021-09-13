@@ -1,6 +1,12 @@
-import { db } from '../data/connection';
+import { db, pool } from '../data/connection';
 import { DbResult } from '../models/data';
-import { ErrorHandling, SaleRequest, SaleResponse, User } from '../models';
+import {
+  ErrorHandling,
+  Item,
+  SaleRequest,
+  SaleResponse,
+  User,
+} from '../models';
 import { checkUrl } from './check-url-service';
 import { checkPrice } from './check-price-service';
 import { createErrorPromise } from './error-service';
@@ -80,6 +86,97 @@ const postItem = async (
   }
 };
 
+const buyItem = async (headers: User, request: Item): Promise<void> => {
+  const { id } = headers;
+  const { item_id } = request;
+  const userData: DbResult = await db
+    .query(`SELECT * FROM user WHERE id = ?`, [id])
+    .catch(error => {
+      throw new Error(`database error: ${error.message}`);
+    });
+  const name: string = (userData.results[0] as User).name;
+  const money: number = (userData.results[0] as User).money;
+
+  const sellerData: DbResult = await db
+    .query(`SELECT user_id, price FROM item WHERE id = ?`, [item_id])
+    .catch(error => {
+      throw new Error(`database error: ${error.message}`);
+    });
+
+  const sellerId: number = (sellerData.results[0] as Item).user_id;
+  const price: number = (sellerData.results[0] as Item).price;
+
+  if (price <= money) {
+    const poolPromise = (): Promise<void> =>
+      new Promise(async resolve => {
+        pool.getConnection((error, connection) => {
+          if (error) {
+            throw new Error(`MySQL connection error: ${error.message}`);
+          }
+
+          connection.beginTransaction(error => {
+            if (error) {
+              throw new Error(`MySQL transaction error: ${error.message}`);
+            }
+            connection.query(
+              `UPDATE user SET money = ${money - price} WHERE id = ?`,
+              [id],
+              (error, result) => {
+                if (error) {
+                  return connection.rollback(() => {
+                    throw new Error(`database error: ${error.message}`);
+                  });
+                }
+              }
+            );
+            connection.query(
+              `UPDATE item SET sellable = 0, buyers_name = ${name} WHERE id = ?`,
+              [item_id],
+
+              (error, result) => {
+                if (error) {
+                  return connection.rollback(() => {
+                    throw new Error(`database error: ${error.message}`);
+                  });
+                }
+              }
+            );
+            connection.query(
+              `UPDATE user SET money = ${money + price} WHERE id = ?`,
+              [sellerId],
+              (error, result) => {
+                if (error) {
+                  return connection.rollback(() => {
+                    throw new Error(`database error: ${error.message}`);
+                  });
+                }
+                connection.commit(error => {
+                  if (error) {
+                    return connection.rollback(() => {
+                      throw new Error(`database error: ${error.message}`);
+                    });
+                  }
+                  const response: SaleResponse = {
+                    status: 'Buy was successful.',
+                  };
+                  // resolve(response);
+                });
+              }
+            );
+            connection.release();
+          });
+        });
+      });
+    return await poolPromise().catch(error => {
+      throw new Error(`database error: ${error.message}`);
+    });
+  } else {
+    createErrorPromise('You do not have enough money.');
+  }
+  //return { status: 'ok' };
+};
+
 export const itemService = {
   postItem,
+  buyItem,
 };
