@@ -13,5 +13,6 @@ export interface SaleResponse {
 export interface Item {
   item_id: number;
   price: number;
+  sellable: number;
   user_id: number;
 }

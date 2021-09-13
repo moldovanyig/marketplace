@@ -33,10 +33,10 @@ export const itemController = {
         next(new HttpException(500, error.message));
       });
 
-    /*   if ((data as ErrorHandling).status === 'error') {
-    res.status(400).json(data);
-  } else {
-    res.status(201).json(data);
-  } */
+    if ((data as ErrorHandling).status === 'error') {
+      res.status(400).json(data);
+    } else {
+      res.status(200).json(data);
+    }
   },
 };

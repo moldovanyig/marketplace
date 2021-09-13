@@ -86,7 +86,10 @@ const postItem = async (
   }
 };
 
-const buyItem = async (headers: User, request: Item): Promise<void> => {
+const buyItem = async (
+  headers: User,
+  request: Item
+): Promise<SaleResponse | ErrorHandling> => {
   const { id } = headers;
   const { item_id } = request;
   const userData: DbResult = await db
@@ -98,16 +101,21 @@ const buyItem = async (headers: User, request: Item): Promise<void> => {
   const money: number = (userData.results[0] as User).money;
 
   const sellerData: DbResult = await db
-    .query(`SELECT user_id, price FROM item WHERE id = ?`, [item_id])
+    .query(`SELECT user_id, price, sellable FROM item WHERE id = ?`, [item_id])
     .catch(error => {
       throw new Error(`database error: ${error.message}`);
     });
 
   const sellerId: number = (sellerData.results[0] as Item).user_id;
   const price: number = (sellerData.results[0] as Item).price;
+  const sellable: number = (sellerData.results[0] as Item).sellable;
+
+  if (sellable === 0) return createErrorPromise('That is not for sale.');
+  if (Number(id) === sellerId)
+    return createErrorPromise('You can not buy your own item.');
 
   if (price <= money) {
-    const poolPromise = (): Promise<void> =>
+    const poolPromise = (): Promise<SaleResponse> =>
       new Promise(async resolve => {
         pool.getConnection((error, connection) => {
           if (error) {
@@ -130,7 +138,7 @@ const buyItem = async (headers: User, request: Item): Promise<void> => {
               }
             );
             connection.query(
-              `UPDATE item SET sellable = 0, buyers_name = ${name} WHERE id = ?`,
+              `UPDATE item SET sellable = 0, buyers_name = '${name}' WHERE id = ?`,
               [item_id],
 
               (error, result) => {
@@ -159,7 +167,7 @@ const buyItem = async (headers: User, request: Item): Promise<void> => {
                   const response: SaleResponse = {
                     status: 'Buy was successful.',
                   };
-                  // resolve(response);
+                  return resolve(response);
                 });
               }
             );
@@ -171,9 +179,8 @@ const buyItem = async (headers: User, request: Item): Promise<void> => {
       throw new Error(`database error: ${error.message}`);
     });
   } else {
-    createErrorPromise('You do not have enough money.');
+    return createErrorPromise('You do not have enough money.');
   }
-  //return { status: 'ok' };
 };
 
 export const itemService = {
