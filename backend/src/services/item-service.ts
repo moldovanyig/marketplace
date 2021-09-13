@@ -3,6 +3,8 @@ import { DbResult } from '../models/data';
 import {
   ErrorHandling,
   Item,
+  ListItems,
+  ListResponse,
   SaleRequest,
   SaleResponse,
   User,
@@ -10,6 +12,9 @@ import {
 import { checkUrl } from './check-url-service';
 import { checkPrice } from './check-price-service';
 import { createErrorPromise } from './error-service';
+import { sanitizeString } from './sanitize-service';
+import { checkTitle } from './check-title-service';
+import { checkDescription } from './check-description-service';
 
 const postItem = async (
   headers: User,
@@ -183,7 +188,50 @@ const buyItem = async (
   }
 };
 
+const listItems = async (
+  request: ListItems
+): Promise<ListResponse[] | ErrorHandling> => {
+  const { title, description, priceLowerThan, priceGreaterThan } = request;
+  if (title) sanitizeString(title);
+  if (title && !checkTitle(title))
+    return createErrorPromise('Title length must be lower that 45 characters!');
+  if (description) sanitizeString(description);
+  if (description && !checkDescription(description))
+    return createErrorPromise(
+      'Description length must be lower that 255 characters!'
+    );
+  if (priceLowerThan && !checkPrice(Number(priceLowerThan)))
+    return createErrorPromise('Price must be a postive integer!');
+  if (priceGreaterThan && !checkPrice(Number(priceGreaterThan)))
+    return createErrorPromise('Price must be a postive integer!');
+  let sql: string = `SELECT title, photo_url, price FROM item WHERE sellable = 1 `;
+  let values: Array<any> = [];
+  if (title) {
+    sql += `AND title = '${title}'`;
+    values.push(title);
+  }
+  if (description) {
+    sql += `AND description = '${description}' `;
+    values.push(description);
+  }
+  if (priceLowerThan) {
+    sql += `AND price < ${priceLowerThan} `;
+    values.push(priceLowerThan);
+  }
+  if (priceGreaterThan) {
+    sql += `AND price > ${priceGreaterThan} `;
+    values.push(priceGreaterThan);
+  }
+  const list: DbResult = await db.query(sql, values).catch(error => {
+    throw new Error(`database error: ${error.message}`);
+  });
+
+  if (list.results.length === 0) return createErrorPromise('No results');
+  else return list.results as ListResponse[];
+};
+
 export const itemService = {
   postItem,
   buyItem,
+  listItems,
 };

@@ -16,3 +16,16 @@ export interface Item {
   sellable: number;
   user_id: number;
 }
+
+export interface ListItems {
+  title: string;
+  description: string;
+  priceLowerThan: number;
+  priceGreaterThan: number;
+}
+
+export interface ListResponse {
+  name: string;
+  photo_url: string;
+  price: number;
+}
