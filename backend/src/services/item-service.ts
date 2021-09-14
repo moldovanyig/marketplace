@@ -64,6 +64,12 @@ const postItem = async (
     return createErrorPromise('Photo field must be a valid image url!');
   } else if (!checkPrice(price)) {
     return createErrorPromise('Price must be a postive integer!');
+  } else if (!checkTitle(title)) {
+    return createErrorPromise('Title length must be lower that 45 characters!');
+  } else if (!checkDescription(description)) {
+    return createErrorPromise(
+      'Description length must be lower that 255 characters!'
+    );
   } else {
     //checking if title is still available
     const data: DbResult = await db
