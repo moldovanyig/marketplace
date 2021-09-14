@@ -24,6 +24,8 @@ const postItem = async (
 ): Promise<SaleResponse | ErrorHandling> => {
   const { title, description, photo_url, price } = request;
   const { id } = headers;
+  if (title) sanitizeString(title);
+  if (description) sanitizeString(description);
   if (!title && !description && !photo_url && !price) {
     return createErrorPromise('All fields are required.');
   } else if (title && !description && !photo_url && !price) {
