@@ -5,11 +5,6 @@ import config from '../config';
 
 import HttpException from '../exceptions/http-exception';
 
-interface tokenInterface {
-  id: number;
-  name: string;
-}
-
 function authenticateToken(
   request: Request,
   response: Response,
@@ -27,7 +22,6 @@ function authenticateToken(
     if (err) {
       return next(new HttpException(403, 'Invalid token'));
     }
-    request.headers['id'] = (user as tokenInterface).id;
 
     next();
   });
