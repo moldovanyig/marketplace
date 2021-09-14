@@ -5,6 +5,7 @@ import {
   loginController,
   itemController,
 } from '../controllers';
+import authenticateToken from '../middlewares/authenticate-token';
 
 const router = express.Router();
 
@@ -13,6 +14,7 @@ router.use(express.json());
 
 router.post('/registration', registrationController.post);
 router.post('/login', loginController.post);
+router.use(authenticateToken);
 router.get('/item', itemController.get);
 router.get('/item/:id', itemController.getById);
 router.post('/item', itemController.post);
