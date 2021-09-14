@@ -3,4 +3,4 @@ export * from './errorhandling';
 export * from './login';
 export * from './data';
 export * from './user';
-export * from './sale';
+export * from './item';
