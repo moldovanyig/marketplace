@@ -108,7 +108,10 @@ const buyItem = async (
   const money: number = (userData.results[0] as User).money;
 
   const sellerData: DbResult = await db
-    .query(`SELECT user_id, price, sellable FROM item WHERE id = ?`, [item_id])
+    .query(
+      `SELECT user_id, price, sellable, money FROM item INNER JOIN user ON item.user_id = user.id WHERE item.id = ?`,
+      [item_id]
+    )
     .catch(error => {
       throw new Error(`database error: ${error.message}`);
     });
@@ -116,6 +119,7 @@ const buyItem = async (
   const sellerId: number = (sellerData.results[0] as Item).user_id;
   const price: number = (sellerData.results[0] as Item).price;
   const sellable: number = (sellerData.results[0] as Item).sellable;
+  const sellerMoney: number = (sellerData.results[0] as User).money;
 
   if (sellable === 0) return createErrorPromise('That is not for sale.');
   if (Number(id) === sellerId)
@@ -157,8 +161,19 @@ const buyItem = async (
               }
             );
             connection.query(
-              `UPDATE user SET money = ${money + price} WHERE id = ?`,
+              `UPDATE user SET money = ${sellerMoney + price} WHERE id = ?`,
               [sellerId],
+              (error, result) => {
+                if (error) {
+                  return connection.rollback(() => {
+                    throw new Error(`database error: ${error.message}`);
+                  });
+                }
+              }
+            );
+            connection.query(
+              `UPDATE item SET sellable = 0 WHERE id = ?`,
+              [item_id],
               (error, result) => {
                 if (error) {
                   return connection.rollback(() => {
