@@ -3,8 +3,10 @@ import { DbResult } from '../models/data';
 import {
   ErrorHandling,
   Item,
+  ItemId,
   ListItems,
   ListResponse,
+  ResponseItem,
   SaleRequest,
   SaleResponse,
   User,
@@ -230,8 +232,31 @@ const listItems = async (
   else return list.results as ListResponse[];
 };
 
+const getItem = async (
+  request: ItemId
+): Promise<ResponseItem | ErrorHandling> => {
+  const id = Number(request.id);
+  if (!checkPrice(id)) {
+    return createErrorPromise('ID must be a postive integer!');
+  }
+  const data: DbResult = await db
+    .query(
+      `SELECT title, description, photo_url, price, buyers_name, name, avatar FROM item INNER JOIN user ON item.user_id = user.id WHERE item.id = ?`,
+      [id]
+    )
+    .catch(error => {
+      throw new Error(`database error: ${error.message}`);
+    });
+  if (data.results.length === 0)
+    return createErrorPromise('There is no item with that ID.');
+  else {
+    return data.results[0] as ResponseItem;
+  }
+};
+
 export const itemService = {
   postItem,
   buyItem,
   listItems,
+  getItem,
 };

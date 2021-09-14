@@ -29,3 +29,17 @@ export interface ListResponse {
   photo_url: string;
   price: number;
 }
+
+export interface ItemId {
+  id: number;
+}
+
+export interface ResponseItem {
+  title: string;
+  description: string;
+  photo_url: string;
+  price: number;
+  buyers_name: string;
+  name: string;
+  avatar: number;
+}
