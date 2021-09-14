@@ -1,12 +1,12 @@
 import { Request, Response, NextFunction } from 'express';
 
 import HttpException from '../exceptions/http-exception';
-import { ErrorHandling, ItemId, ListItems, SaleRequest } from '../models';
+import { ErrorHandling, ItemId, ListItems, ItemPostRequest } from '../models';
 import { itemService } from '../services/item-service';
 
 export const itemController = {
   async post(
-    req: Request<SaleRequest>,
+    req: Request<ItemPostRequest>,
     res: Response,
     next: NextFunction
   ): Promise<void> {
@@ -23,7 +23,7 @@ export const itemController = {
     }
   },
   async put(
-    req: Request<SaleRequest>,
+    req: Request<ItemPostRequest>,
     res: Response,
     next: NextFunction
   ): Promise<void> {

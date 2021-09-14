@@ -4,11 +4,11 @@ import {
   ErrorHandling,
   Item,
   ItemId,
+  ItemPostRequest,
+  ItemPostResponse,
   ListItems,
   ListResponse,
   ResponseItem,
-  SaleRequest,
-  SaleResponse,
   User,
 } from '../models';
 import { checkUrl } from './check-url-service';
@@ -20,8 +20,8 @@ import { checkDescription } from './check-description-service';
 
 const postItem = async (
   headers: User,
-  request: SaleRequest
-): Promise<SaleResponse | ErrorHandling> => {
+  request: ItemPostRequest
+): Promise<ItemPostResponse | ErrorHandling> => {
   const { title, description, photo_url, price } = request;
   const { id } = headers;
   if (title) sanitizeString(title);
@@ -93,7 +93,10 @@ const postItem = async (
             throw new Error(`database error: ${error.message}`);
           });
         if (addItem) {
-          const response: SaleResponse = { status: 'ok' };
+          const response: ItemPostResponse = {
+            status: 'ok',
+            message: 'Item has been added successfully.',
+          };
           resolve(response);
         }
       });
@@ -104,7 +107,7 @@ const postItem = async (
 const buyItem = async (
   headers: User,
   request: Item
-): Promise<SaleResponse | ErrorHandling> => {
+): Promise<ItemPostResponse | ErrorHandling> => {
   const { id } = headers;
   const { item_id } = request;
   const userData: DbResult = await db
@@ -134,7 +137,7 @@ const buyItem = async (
     return createErrorPromise('You can not buy your own item.');
 
   if (price <= money) {
-    const poolPromise = (): Promise<SaleResponse> =>
+    const poolPromise = (): Promise<ItemPostResponse> =>
       new Promise(async resolve => {
         pool.getConnection((error, connection) => {
           if (error) {
@@ -194,8 +197,9 @@ const buyItem = async (
                       throw new Error(`database error: ${error.message}`);
                     });
                   }
-                  const response: SaleResponse = {
-                    status: 'Buy was successful.',
+                  const response: ItemPostResponse = {
+                    status: 'ok',
+                    message: 'The purchase was successful.',
                   };
                   return resolve(response);
                 });

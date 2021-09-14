@@ -1,13 +1,13 @@
-export interface SaleRequest {
+export interface ItemPostRequest {
   title: string;
   description: string;
   photo_url: string;
   price: number;
 }
 
-export interface SaleResponse {
+export interface ItemPostResponse {
   status: string;
-  message?: string;
+  message: string;
 }
 
 export interface Item {
