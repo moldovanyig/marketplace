@@ -1,0 +1,31 @@
+div.message-container .error {
+  display: flex;
+  min-height: 10%;
+  width: 100%;
+}
+
+.error {
+  margin-top: 0.3em;
+  color: red;
+  font-size: small;
+  display: flex;
+  align-self: flex-start;
+}
+
+.exclamation-triangle {
+  padding-left: 5%;
+  padding-top: 5%;
+  font-size: xx-large;
+}
+
+.neutral {
+  color: gray;
+}
+
+.successful {
+  margin-top: 7px;
+  color: rgb(49, 157, 45);
+  font-size: large;
+  display: flex;
+  font-weight: bold;
+}
