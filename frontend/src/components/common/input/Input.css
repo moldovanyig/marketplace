@@ -1,0 +1,23 @@
+input {
+  outline: none;
+  border: none;
+  margin-top: 3vh;
+  width: 90%;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.523);
+  padding: 2vh 0 1vh 0;
+  font-size: larger;
+}
+
+input:focus {
+  background-color: rgba(199, 196, 196, 0.228);
+}
+
+.neutral-field {
+  border-bottom: 2px solid rgba(128, 128, 128, 0.523);
+}
+.valid-field {
+  border-bottom: 2px solid rgb(41, 213, 67);
+}
+.invalid-field {
+  border-bottom: 2px solid rgb(255, 0, 0);
+}
