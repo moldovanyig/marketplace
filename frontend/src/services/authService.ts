@@ -1,9 +1,9 @@
 import { LoginInfo } from '../interfaces/login';
-import { userInfo } from '../interfaces/user';
+import { UserInfo } from '../interfaces/user';
 
 import config from '../config';
 
-const authService = async (loginData: userInfo): Promise<LoginInfo> => {
+const authService = async (loginData: UserInfo): Promise<LoginInfo> => {
   if (!loginData.name || !loginData.password) {
     return {
       error: 'All the input fields are required.',
