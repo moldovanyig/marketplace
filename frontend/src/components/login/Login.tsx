@@ -8,9 +8,11 @@ import { authService } from '../../services/authService';
 
 import './Login.css';
 
-interface LoginProps {}
+interface LoginProps {
+  saveUserInfo: Function;
+}
 
-const Login: React.FunctionComponent<LoginProps> = () => {
+const Login: React.FunctionComponent<LoginProps> = ({ saveUserInfo }) => {
   const history = useHistory();
   const [name, setName] = useState('');
   const onUsernameChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -36,6 +38,7 @@ const Login: React.FunctionComponent<LoginProps> = () => {
     response.error
       ? (errorMessage = response.error)
       : ({ authorization } = response);
+    console.log(response.authorization);
 
     if (errorMessage) {
       setMessage(errorMessage);
@@ -46,7 +49,12 @@ const Login: React.FunctionComponent<LoginProps> = () => {
       setMessage('');
       setValid(true);
 
-      window.dispatchEvent(new Event('storage'));
+      saveUserInfo({
+        authorization,
+        name,
+      });
+
+      // window.dispatchEvent(new Event('storage'));
       setTimeout(() => {
         history.push('/');
       }, 1000);
