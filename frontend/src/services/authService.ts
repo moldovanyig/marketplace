@@ -20,7 +20,7 @@ const authService = async (loginData: UserInfo): Promise<LoginInfo> => {
     if (result.status === 'error') return { error: result.message };
     else {
       return {
-        authorization: result.authorization,
+        authorization: result.token,
       };
     }
   } catch (err: any) {
