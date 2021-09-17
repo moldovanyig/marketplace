@@ -38,7 +38,6 @@ const Login: React.FunctionComponent<LoginProps> = ({ saveUserInfo }) => {
     response.error
       ? (errorMessage = response.error)
       : ({ authorization } = response);
-    console.log(response.authorization);
 
     if (errorMessage) {
       setMessage(errorMessage);
@@ -54,7 +53,6 @@ const Login: React.FunctionComponent<LoginProps> = ({ saveUserInfo }) => {
         name,
       });
 
-      // window.dispatchEvent(new Event('storage'));
       setTimeout(() => {
         history.push('/');
       }, 1000);
