@@ -1,12 +1,12 @@
 import { SAVE_USER_INFO } from '../actions/userAction';
 
 interface UserState {
-  token: string;
+  authorization: string;
   name: string;
 }
 
 const initialState: UserState = {
-  token: '',
+  authorization: '',
   name: '',
 };
 
