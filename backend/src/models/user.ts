@@ -11,3 +11,12 @@ export interface User {
   name: string;
   money: number;
 }
+
+export interface UserRequest {
+  name: string;
+}
+
+export interface UserResponse {
+  avatar: number;
+  money: number;
+}
