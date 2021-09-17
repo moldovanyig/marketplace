@@ -1,0 +1,19 @@
+.header {
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  background-color: rgb(46, 144, 135);
+}
+
+.header a {
+  text-decoration: none;
+  color: black;
+  margin-left: 20px;
+  cursor: pointer;
+  transition: 0.4s;
+}
+
+.header-links {
+  margin-left: auto;
+  font-weight: bold;
+}

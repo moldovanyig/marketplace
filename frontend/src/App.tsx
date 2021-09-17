@@ -6,6 +6,7 @@ import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 
 import Login from './components/login';
 import Registration from './components/registration';
+import Header from './components/header';
 import store from './store';
 
 library.add(faExclamationTriangle);
@@ -14,6 +15,7 @@ function App() {
   return (
     <Provider store={store}>
       <BrowserRouter>
+        <Header />
         <Switch>
           <Route path="/login">
             <Login />
