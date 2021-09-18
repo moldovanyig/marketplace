@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect, useRef, useMemo } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import store from '../../store';
 
 import './Header.css';
@@ -30,25 +30,8 @@ const Header: React.FunctionComponent<HeaderProps> = ({
   avatar,
   money,
 }) => {
-  console.log(avatar);
-
+  const history = useHistory();
   const [headerLoggedIn, setHeaderLoggedIn] = useState(false);
-  const avatars = [
-    Avatar1,
-    Avatar2,
-    Avatar3,
-    Avatar4,
-    Avatar5,
-    Avatar6,
-    Avatar7,
-    Avatar8,
-    Avatar9,
-    Avatar10,
-    Avatar11,
-    Avatar12,
-  ];
-
-  let choosenAvatar = useRef(avatars[avatar]);
 
   useEffect(() => {
     const checkStorage = (): void => {
@@ -61,7 +44,29 @@ const Header: React.FunctionComponent<HeaderProps> = ({
     checkStorage();
   }, [authorization, name]);
 
+  const avatars: Array<string> = [];
+  let choosenAvatar = useRef(avatars[avatar]);
+  useMemo(() => {
+    const avatars = [
+      Avatar1,
+      Avatar2,
+      Avatar3,
+      Avatar4,
+      Avatar5,
+      Avatar6,
+      Avatar7,
+      Avatar8,
+      Avatar9,
+      Avatar10,
+      Avatar11,
+      Avatar12,
+    ];
+    choosenAvatar.current = avatars[avatar - 1];
+  }, [avatar]);
+
   const handleClick = (): void => {
+    localStorage.removeItem('token');
+    history.push('/login');
     store.dispatch({ type: 'USER_LOGGED_OUT' });
   };
 
