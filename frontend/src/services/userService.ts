@@ -2,11 +2,13 @@ import { UserRequest, UserResponse } from '../interfaces/user';
 
 import config from '../config';
 
+export const token: string = localStorage.getItem('token') || 'faketoken';
+
 const userService = async (userData: UserRequest): Promise<UserResponse> => {
   try {
     const response = await fetch(`${config.url}/api/user`, {
       method: 'GET',
-      headers: { name: userData.name },
+      headers: { name: userData.name, authorization: token },
     });
     const result = await response.json();
     if (result.status === 'error') return { error: result.message };
