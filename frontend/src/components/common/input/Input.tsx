@@ -4,7 +4,7 @@ import './Input.css';
 interface InputProps {
   type: string;
   placeholder: string;
-  value: string;
+  value: string | number;
   onChange: ChangeEventHandler;
   className?: string;
 }
