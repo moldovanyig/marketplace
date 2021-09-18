@@ -22,47 +22,47 @@ const postItem = async (
   headers: User,
   request: ItemPostRequest
 ): Promise<ItemPostResponse | ErrorHandling> => {
-  const { title, description, photo_url, price } = request;
-  const { id } = headers;
+  const { title, description, photoUrl, price } = request;
+  const { name } = headers;
   if (title) sanitizeString(title);
   if (description) sanitizeString(description);
-  if (!title && !description && !photo_url && !price) {
+  if (!title && !description && !photoUrl && !price) {
     return createErrorPromise('All fields are required.');
-  } else if (title && !description && !photo_url && !price) {
+  } else if (title && !description && !photoUrl && !price) {
     return createErrorPromise(
       'Description, photo and price fields are required.'
     );
-  } else if (description && !title && !photo_url && !price) {
+  } else if (description && !title && !photoUrl && !price) {
     return createErrorPromise('Title, photo and price fields are required.');
-  } else if (photo_url && !description && !title && !price) {
+  } else if (photoUrl && !description && !title && !price) {
     return createErrorPromise(
       'Title, description and price fields are required.'
     );
-  } else if (price && !description && !photo_url && !title) {
+  } else if (price && !description && !photoUrl && !title) {
     return createErrorPromise(
       'Title, description and photo fields are required.'
     );
-  } else if (title && description && !photo_url && !price) {
+  } else if (title && description && !photoUrl && !price) {
     return createErrorPromise('Photo and price fields are required.');
-  } else if (title && photo_url && !description && !price) {
+  } else if (title && photoUrl && !description && !price) {
     return createErrorPromise('Description and price fields are required.');
-  } else if (title && price && !description && !photo_url) {
+  } else if (title && price && !description && !photoUrl) {
     return createErrorPromise('Description and photo fields are required.');
-  } else if (description && photo_url && !title && !price) {
+  } else if (description && photoUrl && !title && !price) {
     return createErrorPromise('Title and price fields are required.');
-  } else if (description && price && !title && !photo_url) {
+  } else if (description && price && !title && !photoUrl) {
     return createErrorPromise('Title and photo fields are required.');
-  } else if (photo_url && price && !title && !description) {
+  } else if (photoUrl && price && !title && !description) {
     return createErrorPromise('Title and description fields are required.');
-  } else if (title && description && photo_url && !price) {
+  } else if (title && description && photoUrl && !price) {
     return createErrorPromise('Price field is required.');
-  } else if (title && description && price && !photo_url) {
+  } else if (title && description && price && !photoUrl) {
     return createErrorPromise('Photo field is required.');
-  } else if (title && photo_url && price && !description) {
+  } else if (title && photoUrl && price && !description) {
     return createErrorPromise('Description field is required.');
-  } else if (description && photo_url && price && !title) {
+  } else if (description && photoUrl && price && !title) {
     return createErrorPromise('Title field is required.');
-  } else if (!checkUrl(photo_url)) {
+  } else if (!checkUrl(photoUrl)) {
     return createErrorPromise('Photo field must be a valid image url!');
   } else if (!checkPrice(price)) {
     return createErrorPromise('Price must be a postive integer!');
@@ -84,10 +84,17 @@ const postItem = async (
       return createErrorPromise('Title is already taken.');
     } else {
       return new Promise(async resolve => {
+        const getUserId = await db
+          .query(`SELECT id FROM user WHERE name = ?`, [name])
+          .catch(error => {
+            throw new Error(`database error: ${error.message}`);
+          });
+        const id = ((getUserId as DbResult).results as ItemId[])[0].id;
+
         const addItem = await db
           .query(
             `INSERT INTO item (title, description, photo_url, price, user_id) VALUES (?, ?, ?, ?, ?)`,
-            [title, description, photo_url, price, id]
+            [title, description, photoUrl, price, id]
           )
           .catch(error => {
             throw new Error(`database error: ${error.message}`);
