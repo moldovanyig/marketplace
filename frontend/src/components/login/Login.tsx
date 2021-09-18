@@ -51,6 +51,7 @@ const Login: React.FunctionComponent<LoginProps> = ({ saveUserInfo }) => {
       setMessage('');
       setValid(true);
 
+      localStorage.setItem('token', authorization);
       saveUserInfo({
         authorization,
         name,
