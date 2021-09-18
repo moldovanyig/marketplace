@@ -15,8 +15,8 @@ router.use(express.json());
 
 router.post('/registration', registrationController.post);
 router.post('/login', loginController.post);
-router.get('/user', userController.get);
 router.use(authenticateToken);
+router.get('/user', userController.get);
 router.get('/item', itemController.get);
 router.get('/item/:id', itemController.getById);
 router.post('/item', itemController.post);
