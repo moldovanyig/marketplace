@@ -7,6 +7,7 @@ import Btn from '../common/btn';
 import { authService } from '../../services/authService';
 
 import './Login.css';
+import { userService } from '../../services/userService';
 
 interface LoginProps {
   saveUserInfo: Function;
@@ -34,6 +35,8 @@ const Login: React.FunctionComponent<LoginProps> = ({ saveUserInfo }) => {
     event.preventDefault();
     let errorMessage, authorization;
     const response = await authService(loginData);
+    const result = await userService({ name });
+
     setHasBtnBeenClicked(true);
     response.error
       ? (errorMessage = response.error)
@@ -51,6 +54,8 @@ const Login: React.FunctionComponent<LoginProps> = ({ saveUserInfo }) => {
       saveUserInfo({
         authorization,
         name,
+        avatar: result.avatar,
+        money: result.money,
       });
 
       setTimeout(() => {
@@ -65,7 +70,7 @@ const Login: React.FunctionComponent<LoginProps> = ({ saveUserInfo }) => {
       <form className="login-form" onSubmit={handleSubmit}>
         <Input
           type="text"
-          placeholder="username"
+          placeholder="name"
           value={name}
           onChange={onUsernameChange}
           className={
