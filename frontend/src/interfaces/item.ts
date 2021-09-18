@@ -9,3 +9,11 @@ export interface ItemResponse {
   message: string;
   status?: string;
 }
+
+export interface ItemListResponse {
+  name: string;
+  photoUrl: string;
+  price: number;
+  status: string;
+  message: string;
+}
