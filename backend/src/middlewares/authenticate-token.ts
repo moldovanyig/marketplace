@@ -10,8 +10,7 @@ function authenticateToken(
   response: Response,
   next: NextFunction
 ): void {
-  const authHeader = request.headers['authorization'];
-  const token = authHeader && authHeader.split(' ')[1];
+  const token = request.headers['authorization'];
 
   if (!token) {
     return next(new HttpException(401, 'Unauthorized'));
@@ -22,7 +21,6 @@ function authenticateToken(
     if (err) {
       return next(new HttpException(403, 'Invalid token'));
     }
-
     next();
   });
 }
