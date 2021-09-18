@@ -1,7 +1,7 @@
 export interface ItemPostRequest {
   title: string;
   description: string;
-  photo_url: string;
+  photoUrl: string;
   price: number;
 }
 
