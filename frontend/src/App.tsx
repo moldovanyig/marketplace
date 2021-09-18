@@ -4,9 +4,10 @@ import { Provider } from 'react-redux';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 
+import Header from './components/header';
 import Login from './components/login';
 import Registration from './components/registration';
-import Header from './components/header';
+import AddItem from './components/additem/AddItem';
 import store from './store';
 
 library.add(faExclamationTriangle);
@@ -22,6 +23,9 @@ function App() {
           </Route>
           <Route path="/registration">
             <Registration />
+          </Route>
+          <Route path="/item">
+            <AddItem />
           </Route>
         </Switch>
       </BrowserRouter>
