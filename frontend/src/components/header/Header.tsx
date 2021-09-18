@@ -88,6 +88,7 @@ const Header: React.FunctionComponent<HeaderProps> = ({
           </h1>
 
           <div className="header-links">
+            <Link to="/item">Sell</Link>
             <Link onClick={handleClick} to="/login">
               Logout
             </Link>
