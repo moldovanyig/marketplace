@@ -3,3 +3,13 @@ export interface UserInfo {
   password: string;
   avatar?: string;
 }
+
+export interface UserRequest {
+  name: string;
+}
+
+export interface UserResponse {
+  error?: string;
+  avatar?: number;
+  money?: number;
+}
