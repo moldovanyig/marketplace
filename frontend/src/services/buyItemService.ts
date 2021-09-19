@@ -1,11 +1,10 @@
 import config from '../config';
-import { ItemResponse } from '../interfaces/item';
+import { ItemPutRequest, ItemResponse } from '../interfaces/item';
 import store from '../store';
 
-const token: string = localStorage.getItem('token') || 'faketoken';
-const name: string = store.getState().user['name'];
-
-const buyItemService = async (title: string): Promise<ItemResponse> => {
+const buyItemService = async (title: ItemPutRequest): Promise<ItemResponse> => {
+  const token: string = localStorage.getItem('token') || 'faketoken';
+  const name: string = store.getState().user['name'];
   try {
     const response = await fetch(`${config.url}/api/item`, {
       method: 'PUT',
