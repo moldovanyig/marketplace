@@ -5,9 +5,9 @@ import Input from '../common/input';
 import Message from '../common/message';
 import Btn from '../common/btn';
 import { authService } from '../../services/authService';
+import { userService } from '../../services/userService';
 
 import './Login.css';
-import { userService } from '../../services/userService';
 
 interface LoginProps {
   saveUserInfo: Function;
