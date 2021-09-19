@@ -115,20 +115,21 @@ const buyItem = async (
   headers: User,
   request: Item
 ): Promise<ItemPostResponse | ErrorHandling> => {
-  const { id } = headers;
-  const { item_id } = request;
+  const { name } = headers;
+  const { title } = request;
+
   const userData: DbResult = await db
-    .query(`SELECT * FROM user WHERE id = ?`, [id])
+    .query(`SELECT * FROM user WHERE name = ?`, [name])
     .catch(error => {
       throw new Error(`database error: ${error.message}`);
     });
-  const name: string = (userData.results[0] as User).name;
+  const id: number = (userData.results[0] as User).id;
   const money: number = (userData.results[0] as User).money;
 
   const sellerData: DbResult = await db
     .query(
-      `SELECT user_id, price, sellable, money FROM item INNER JOIN user ON item.user_id = user.id WHERE item.id = ?`,
-      [item_id]
+      `SELECT user_id, price, sellable, money FROM item INNER JOIN user ON item.user_id = user.id WHERE title = ?`,
+      [title]
     )
     .catch(error => {
       throw new Error(`database error: ${error.message}`);
@@ -139,9 +140,9 @@ const buyItem = async (
   const sellable: number = (sellerData.results[0] as Item).sellable;
   const sellerMoney: number = (sellerData.results[0] as User).money;
 
-  if (sellable === 0) return createErrorPromise('That is not for sale.');
-  if (Number(id) === sellerId)
+  if (id === sellerId)
     return createErrorPromise('You can not buy your own item.');
+  if (sellable === 0) return createErrorPromise('That is not for sale.');
 
   if (price <= money) {
     const poolPromise = (): Promise<ItemPostResponse> =>
@@ -167,8 +168,8 @@ const buyItem = async (
               }
             );
             connection.query(
-              `UPDATE item SET sellable = 0, buyers_name = '${name}' WHERE id = ?`,
-              [item_id],
+              `UPDATE item SET sellable = 0, buyers_name = '${name}' WHERE title = ?`,
+              [title],
 
               (error, result) => {
                 if (error) {
@@ -190,8 +191,8 @@ const buyItem = async (
               }
             );
             connection.query(
-              `UPDATE item SET sellable = 0 WHERE id = ?`,
-              [item_id],
+              `UPDATE item SET sellable = 0 WHERE title = ?`,
+              [title],
               (error, result) => {
                 if (error) {
                   return connection.rollback(() => {
