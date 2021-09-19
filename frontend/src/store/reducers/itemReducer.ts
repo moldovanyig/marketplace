@@ -14,7 +14,7 @@ const initialState: Array<ItemState> = [];
 
 export const itemReducer = (state = initialState, action: any) => {
   if (action.type === SAVE_ITEM_INFO) {
-    return [...state, action.payload];
+    return action.payload;
   }
   return state;
 };
