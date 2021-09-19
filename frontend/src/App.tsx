@@ -7,7 +7,7 @@ import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import Header from './components/header';
 import Login from './components/login';
 import Registration from './components/registration';
-import AddItem from './components/additem/AddItem';
+import AddItem from './components/item/additem';
 import Homepage from './components/homepage';
 import store from './store';
 import ItemById from './components/item/itembyid';
