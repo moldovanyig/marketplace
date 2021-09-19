@@ -20,3 +20,7 @@ export interface ItemListResponse {
   status: string;
   message: string;
 }
+
+export interface ItemPutRequest {
+  title: string;
+}
