@@ -11,7 +11,7 @@ export interface ItemPostResponse {
 }
 
 export interface Item {
-  item_id: number;
+  title: string;
   price: number;
   sellable: number;
   user_id: number;
