@@ -11,9 +11,12 @@ export interface ItemResponse {
 }
 
 export interface ItemListResponse {
-  name: string;
-  photoUrl: string;
+  title: string;
+  description: string;
+  photo_url: string;
   price: number;
+  buyers_name: string;
+  avatar: number;
   status: string;
   message: string;
 }
