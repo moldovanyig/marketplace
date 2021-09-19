@@ -2,9 +2,8 @@ import { UserRequest, UserResponse } from '../interfaces/user';
 
 import config from '../config';
 
-export const token: string = localStorage.getItem('token') || 'faketoken';
-
 const userService = async (userData: UserRequest): Promise<UserResponse> => {
+  const token: string = localStorage.getItem('token') || 'faketoken';
   try {
     const response = await fetch(`${config.url}/api/user`, {
       method: 'GET',
