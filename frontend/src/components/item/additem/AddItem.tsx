@@ -1,10 +1,10 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { useHistory } from 'react-router';
-import { addItemService } from '../../services/addItemService';
-import Btn from '../common/btn';
-import Heading from '../common/heading';
-import Input from '../common/input';
-import Message from '../common/message';
+import { addItemService } from '../../../services/addItemService';
+import Btn from '../../common/btn';
+import Heading from '../../common/heading';
+import Input from '../../common/input';
+import Message from '../../common/message';
 
 interface AddItemProps {}
 
