@@ -56,7 +56,6 @@ const AddItem: React.FunctionComponent<AddItemProps> = () => {
       setPriceValid(false);
       setValid(false);
       setMessage('All input fields are required!');
-      console.log(message);
       return;
     } else if (
       title.length > 0 &&
