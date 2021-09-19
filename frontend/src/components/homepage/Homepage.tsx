@@ -32,8 +32,11 @@ const Homepage: React.FunctionComponent<HomepageProps> = ({ saveItemInfo }) => {
     setPriceGreaterThan(Number(event.target.value));
   };
 
-  const [message, setMessage] = useState('');
-  const [valid, setValid] = useState(false);
+  const [messageList, setMessageList] = useState('');
+  const [validList, setValidList] = useState(false);
+
+  const [messageId, setMessageId] = useState('');
+  const [validId, setValidId] = useState(false);
 
   async function handleListSubmit(
     event: FormEvent<HTMLElement>
@@ -47,11 +50,11 @@ const Homepage: React.FunctionComponent<HomepageProps> = ({ saveItemInfo }) => {
     const response = await searchListService(request.join('&'));
 
     if (response.status) {
-      setValid(false);
-      setMessage(response.message);
+      setValidList(false);
+      setMessageList(response.message);
     } else {
-      setMessage('');
-      setValid(true);
+      setValidList(true);
+      setMessageList('');
       saveItemInfo(response);
     }
   }
@@ -66,11 +69,11 @@ const Homepage: React.FunctionComponent<HomepageProps> = ({ saveItemInfo }) => {
     const response = await searchIdService(id);
 
     if (response.status) {
-      setValid(false);
-      setMessage(response.message);
+      setValidId(false);
+      setMessageId(response.message);
     } else {
-      setMessage('');
-      setValid(true);
+      setValidId(true);
+      setMessageId('');
       saveItemInfo(response);
     }
   }
@@ -108,7 +111,7 @@ const Homepage: React.FunctionComponent<HomepageProps> = ({ saveItemInfo }) => {
           onChange={onPriceGreaterChange}
           className={'neutral-field'}
         />
-        <Message message={message} isValid={valid} />
+        <Message message={messageList} isValid={validList} />
         <Btn label="Search" />
       </form>
       <Heading className={'login-title'} label="Search by id" />
@@ -120,7 +123,7 @@ const Homepage: React.FunctionComponent<HomepageProps> = ({ saveItemInfo }) => {
           onChange={onIdChange}
           className={'neutral-field'}
         />
-        <Message message={message} isValid={valid} />
+        <Message message={messageId} isValid={validId} />
         <Btn label="Search" />
       </form>
     </div>
