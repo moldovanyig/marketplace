@@ -71,14 +71,7 @@ const Homepage: React.FunctionComponent<HomepageProps> = ({ saveItemInfo }) => {
     } else {
       setMessage('');
       setValid(true);
-      saveItemInfo({
-        title: response.title,
-        description: response.description,
-        photo_url: response.photo_url,
-        price: response.price,
-        buyers_name: response.buyers_name,
-        avatar: response.avatar,
-      });
+      saveItemInfo(response);
     }
   }
 
