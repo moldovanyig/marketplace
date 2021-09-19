@@ -8,9 +8,11 @@ import Heading from '../common/heading';
 import Input from '../common/input';
 import Message from '../common/message';
 
-interface HomepageProps {}
+interface HomepageProps {
+  saveItemInfo: Function;
+}
 
-const Homepage: React.FunctionComponent<HomepageProps> = () => {
+const Homepage: React.FunctionComponent<HomepageProps> = ({ saveItemInfo }) => {
   const [title, setTitle] = useState('');
   const onTitleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
@@ -43,13 +45,14 @@ const Homepage: React.FunctionComponent<HomepageProps> = () => {
     if (priceLowerThan) request.push(`priceLowerThan=${priceLowerThan}`);
     if (priceGreaterThan) request.push(`priceGreaterThan=${priceGreaterThan}`);
     const response = await searchListService(request.join('&'));
-    console.log(response);
+
     if (response.status) {
       setValid(false);
       setMessage(response.message);
     } else {
       setMessage('');
       setValid(true);
+      saveItemInfo(response);
     }
   }
 
@@ -61,13 +64,21 @@ const Homepage: React.FunctionComponent<HomepageProps> = () => {
   async function handleIdSubmit(event: FormEvent<HTMLElement>): Promise<void> {
     event.preventDefault();
     const response = await searchIdService(id);
-    console.log(response);
+
     if (response.status) {
       setValid(false);
       setMessage(response.message);
     } else {
       setMessage('');
       setValid(true);
+      saveItemInfo({
+        title: response.title,
+        description: response.description,
+        photo_url: response.photo_url,
+        price: response.price,
+        buyers_name: response.buyers_name,
+        avatar: response.avatar,
+      });
     }
   }
 
