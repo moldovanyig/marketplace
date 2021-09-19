@@ -8,7 +8,7 @@ import Header from './components/header';
 import Login from './components/login';
 import Registration from './components/registration';
 import AddItem from './components/additem/AddItem';
-import Homepage from './components/homepage/Homepage';
+import Homepage from './components/homepage';
 import store from './store';
 
 library.add(faExclamationTriangle);
