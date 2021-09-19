@@ -10,6 +10,7 @@ import Registration from './components/registration';
 import AddItem from './components/additem/AddItem';
 import Homepage from './components/homepage';
 import store from './store';
+import ItemById from './components/item/itembyid';
 
 library.add(faExclamationTriangle);
 
@@ -30,6 +31,7 @@ function App() {
           </Route>
           <Route path="/">
             <Homepage />
+            <ItemById />
           </Route>
         </Switch>
       </BrowserRouter>
