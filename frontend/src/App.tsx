@@ -9,9 +9,11 @@ import Login from './components/login';
 import Registration from './components/registration';
 import AddItem from './components/item/additem';
 import Homepage from './components/homepage';
-import store from './store';
 import ItemById from './components/item/itembyid';
 import ItemsByList from './components/item/itemsbylist';
+import NotImplemented from './components/notimplemented';
+
+import store from './store';
 
 library.add(faExclamationTriangle);
 
@@ -30,10 +32,13 @@ function App() {
           <Route path="/item">
             <AddItem />
           </Route>
-          <Route path="/">
+          <Route exact path="/">
             <Homepage />
             <ItemById />
             <ItemsByList />
+          </Route>
+          <Route>
+            <NotImplemented />
           </Route>
         </Switch>
       </BrowserRouter>
