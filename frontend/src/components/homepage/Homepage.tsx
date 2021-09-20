@@ -9,10 +9,14 @@ import Input from '../common/input';
 import Message from '../common/message';
 
 interface HomepageProps {
+  saveListInfo: Function;
   saveItemInfo: Function;
 }
 
-const Homepage: React.FunctionComponent<HomepageProps> = ({ saveItemInfo }) => {
+const Homepage: React.FunctionComponent<HomepageProps> = ({
+  saveListInfo,
+  saveItemInfo,
+}) => {
   const [title, setTitle] = useState('');
   const onTitleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
@@ -55,7 +59,7 @@ const Homepage: React.FunctionComponent<HomepageProps> = ({ saveItemInfo }) => {
     } else {
       setValidList(true);
       setMessageList('');
-      saveItemInfo(response);
+      saveListInfo(response);
     }
   }
 
