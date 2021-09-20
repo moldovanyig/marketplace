@@ -2,10 +2,11 @@ import { RootStateOrAny } from 'react-redux';
 import { AnyAction, combineReducers } from 'redux';
 
 import { userReducer } from './reducers/userReducer';
-import { itemReducer } from './reducers/itemReducer';
+import { itemListReducer, itemReducer } from './reducers/itemReducer';
 
 const appReducer = combineReducers({
   user: userReducer,
+  items: itemListReducer,
   item: itemReducer,
 });
 

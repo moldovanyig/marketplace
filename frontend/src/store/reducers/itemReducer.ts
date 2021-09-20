@@ -1,4 +1,4 @@
-import { SAVE_ITEM_INFO } from '../actions/itemAction';
+import { SAVE_ITEM_INFO, SAVE_ITEM_LIST_INFO } from '../actions/itemAction';
 
 export interface ItemState {
   title: string;
@@ -12,7 +12,24 @@ export interface ItemState {
 
 const initialState: Array<ItemState> = [];
 
-export const itemReducer = (state = initialState, action: any) => {
+const initialStateForId: ItemState = {
+  title: '',
+  avatar: 0,
+  buyers_name: '',
+  description: '',
+  name: '',
+  photo_url: '',
+  price: 0,
+};
+
+export const itemListReducer = (state = initialState, action: any) => {
+  if (action.type === SAVE_ITEM_LIST_INFO) {
+    return action.payload;
+  }
+  return state;
+};
+
+export const itemReducer = (state = initialStateForId, action: any) => {
   if (action.type === SAVE_ITEM_INFO) {
     return action.payload;
   }
