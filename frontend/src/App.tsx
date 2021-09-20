@@ -11,6 +11,7 @@ import AddItem from './components/item/additem';
 import Homepage from './components/homepage';
 import store from './store';
 import ItemById from './components/item/itembyid';
+import ItemsByList from './components/item/itemsbylist';
 
 library.add(faExclamationTriangle);
 
@@ -32,6 +33,7 @@ function App() {
           <Route path="/">
             <Homepage />
             <ItemById />
+            <ItemsByList />
           </Route>
         </Switch>
       </BrowserRouter>
