@@ -71,7 +71,7 @@ const ItemById: React.FunctionComponent<ItemByIdProps> = ({
     choosenAvatar.current = avatars[avatar - 1];
   }, [avatar]);
   return (
-    <div>
+    <div className="id-search">
       {title && (
         <div className="card">
           <h1 className="card-title">{title}</h1>
