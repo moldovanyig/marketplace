@@ -1,5 +1,4 @@
-import { FC, ChangeEventHandler } from 'react';
-import './Input.css';
+import { ChangeEventHandler } from 'react';
 
 interface InputProps {
   type: string;
@@ -9,7 +8,7 @@ interface InputProps {
   className?: string;
 }
 
-const Input: FC<InputProps> = ({
+const Input: React.FunctionComponent<InputProps> = ({
   type,
   placeholder,
   value,

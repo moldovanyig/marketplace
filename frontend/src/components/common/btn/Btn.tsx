@@ -1,12 +1,11 @@
-import { FC, MouseEventHandler } from 'react';
-import './Btn.css';
+import { MouseEventHandler } from 'react';
 
 interface BtnProps {
   label: string;
   onClick?: MouseEventHandler;
 }
 
-const Btn: FC<BtnProps> = ({ label, onClick }) => {
+const Btn: React.FunctionComponent<BtnProps> = ({ label, onClick }) => {
   return <button onClick={onClick}>{label}</button>;
 };
 

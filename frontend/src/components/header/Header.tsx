@@ -2,8 +2,6 @@ import { useState, useEffect, useRef, useMemo } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import store from '../../store';
 
-import './Header.css';
-
 import Avatar1 from '../../assets/avatars/1.png';
 import Avatar2 from '../../assets/avatars/2.png';
 import Avatar3 from '../../assets/avatars/3.png';
@@ -82,8 +80,8 @@ const Header: React.FunctionComponent<HeaderProps> = ({
         </>
       ) : (
         <>
+          <img src={choosenAvatar.current} alt="avatar" />
           <h1>
-            <img src={choosenAvatar.current} alt="avatar" />
             Hello {name}, you have {money} credit.
           </h1>
 

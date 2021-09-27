@@ -8,7 +8,6 @@ import Btn from '../common/btn';
 import Icon from '../common/icon';
 import { register } from '../../services/registerService';
 import { UserInfo } from '../../interfaces/user';
-import './Registration.css';
 
 import Avatar1 from '../../assets/avatars/1.png';
 import Avatar2 from '../../assets/avatars/2.png';
@@ -114,8 +113,8 @@ const Registration = () => {
 
   return (
     <div className="center-middle">
-      <Heading className="register-title" label="Register to Marketplace" />
-      <form className="register-form" onSubmit={handleOnSubmit}>
+      <Heading label="Register to Marketplace" />
+      <form onSubmit={handleOnSubmit}>
         <Input
           type="text"
           placeholder="name"

@@ -1,6 +1,4 @@
-import { FC } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import './Message.css';
 
 interface MessageProps {
   message?: string;
@@ -8,7 +6,10 @@ interface MessageProps {
   isValid?: boolean;
 }
 
-const Message: FC<MessageProps> = ({ message, isValid }) => {
+const Message: React.FunctionComponent<MessageProps> = ({
+  message,
+  isValid,
+}) => {
   const exclamationTriangle = (
     <FontAwesomeIcon
       icon="exclamation-triangle"

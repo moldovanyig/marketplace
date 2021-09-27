@@ -7,8 +7,6 @@ import Btn from '../common/btn';
 import { authService } from '../../services/authService';
 import { userService } from '../../services/userService';
 
-import './Login.css';
-
 interface LoginProps {
   saveUserInfo: Function;
 }
@@ -67,8 +65,8 @@ const Login: React.FunctionComponent<LoginProps> = ({ saveUserInfo }) => {
 
   return (
     <div className="center-middle">
-      <Heading className={'login-title'} label={'Login to Marketplace'} />
-      <form className="login-form" onSubmit={handleSubmit}>
+      <Heading label={'Login to Marketplace'} />
+      <form onSubmit={handleSubmit}>
         <Input
           type="text"
           placeholder="name"
