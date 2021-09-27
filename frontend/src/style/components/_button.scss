@@ -1,0 +1,18 @@
+button {
+  margin-top: $base-margin;
+  text-transform: uppercase;
+  padding: $base-padding;
+  border-radius: $border-radius-sm;
+  background-color: $default;
+  border: $base-border-thickness solid light-comp($secondary);
+  cursor: pointer;
+  color: light-comp($secondary);
+
+  &:hover {
+    background-color: light-comp($secondary);
+    color: $secondary;
+  }
+  &:active {
+    filter: brightness(90%);
+  }
+}

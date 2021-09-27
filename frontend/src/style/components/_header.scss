@@ -1,0 +1,25 @@
+.header {
+  padding: $base-padding;
+  display: grid;
+  grid-template-columns: 100px 3fr 1fr 1fr;
+  background-color: $primary;
+  color: $default;
+
+  img {
+    grid-column-start: 1;
+  }
+
+  h1 {
+    grid-column-start: 2;
+    margin-left: $base-margin;
+    align-self: center;
+  }
+
+  a {
+    text-decoration: none;
+    margin: $base-margin $base-margin * 20;
+    cursor: pointer;
+    font-size: $font-size-lg;
+    font-weight: bold;
+  }
+}

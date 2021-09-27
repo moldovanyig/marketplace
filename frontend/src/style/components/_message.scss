@@ -1,0 +1,30 @@
+.message-container {
+  display: flex;
+  height: 50%;
+}
+
+.message-container span {
+  display: flex;
+  margin-top: $base-margin;
+}
+
+.error {
+  color: $error;
+}
+
+.exclamation-triangle {
+  padding-left: $base-padding;
+  font-size: $font-size-lg;
+}
+
+.neutral {
+  color: $default;
+}
+
+.successful {
+  margin-top: $base-margin;
+  color: $secondary;
+  font-size: $base-font-size;
+  display: flex;
+  font-weight: bold;
+}

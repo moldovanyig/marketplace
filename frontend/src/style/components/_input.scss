@@ -1,0 +1,24 @@
+input {
+  outline: none;
+  border: none;
+  margin-top: $base-margin;
+  width: 90%;
+  padding: $base-padding 0;
+  font-size: $font-size-lg;
+
+  &:focus {
+    background-color: $default;
+  }
+}
+
+.neutral-field {
+  border-bottom: 2px solid $default;
+}
+
+.valid-field {
+  border-bottom: 2px solid $secondary;
+}
+
+.invalid-field {
+  border-bottom: 2px solid $error;
+}
