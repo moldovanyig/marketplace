@@ -1,5 +1,4 @@
 import { useMemo, useRef, useState } from 'react';
-import Heading from '../../common/heading';
 import Btn from '../../common/btn';
 import Message from '../../common/message';
 import { buyItemService } from '../../../services/buyItemService';
@@ -73,25 +72,27 @@ const ItemById: React.FunctionComponent<ItemByIdProps> = ({
   }, [avatar]);
   return (
     <div>
-      <Heading className="" label={title} />
-      {description && <p>{description}</p>}
-      <img src={photo_url} alt={photo_url} />
-      {price && <p>Cost: {price} credit.</p>}
-      {name && (
-        <p>
-          The seller is {name}
-          <img src={choosenAvatar.current} alt="avatar" />
-        </p>
-      )}
-      {buyers_name ? (
-        <p>This item was bought by {buyers_name}.</p>
-      ) : title ? (
-        <>
-          <Btn label={'Buy'} onClick={handleClick} />
-          <Message message={message} isValid={valid} />
-        </>
-      ) : (
-        ''
+      {title && (
+        <div className="card">
+          <h1 className="card-title">{title}</h1>
+          <p className="card-body">{description}</p>
+          <img src={photo_url} alt={photo_url} />
+          <p className="card-body">Cost: {price} credit.</p>
+          <p className="card-body">
+            The seller is {name}
+            <img src={choosenAvatar.current} alt="avatar" />
+          </p>
+          {buyers_name ? (
+            <p className="card-body">This item was bought by {buyers_name}.</p>
+          ) : title ? (
+            <>
+              <Btn label={'Buy'} onClick={handleClick} />
+              <Message message={message} isValid={valid} />
+            </>
+          ) : (
+            ''
+          )}
+        </div>
       )}
     </div>
   );

@@ -1,5 +1,4 @@
 import { ItemDetails } from '.';
-import Heading from '../../common/heading';
 
 interface ItemsByListProps {
   items: Array<ItemDetails>;
@@ -11,10 +10,10 @@ const ItemsByList: React.FunctionComponent<ItemsByListProps> = (items) => {
       {items &&
         items.items.map((item, index) => {
           return (
-            <div key={`item-${index}`}>
-              <Heading className="" label={item.title} />
+            <div className="card" key={`item-${index}`}>
+              <h1 className="card-title">{item.title}</h1>
               <img src={item.photo_url} alt={item.photo_url} />
-              <p>Cost: {item.price} credit.</p>
+              <p className="card-body">Cost: {item.price} credit.</p>
             </div>
           );
         })}
