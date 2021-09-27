@@ -73,10 +73,8 @@ const Header: React.FunctionComponent<HeaderProps> = ({
       {!headerLoggedIn ? (
         <>
           <h1>Marketplace</h1>
-          <div className="header-links">
-            <Link to="/login">Login</Link>
-            <Link to="/registration">Registration</Link>
-          </div>
+          <Link to="/login">Login</Link>
+          <Link to="/registration">Registration</Link>
         </>
       ) : (
         <>
@@ -84,13 +82,10 @@ const Header: React.FunctionComponent<HeaderProps> = ({
           <h1>
             Hello {name}, you have {money} credit.
           </h1>
-
-          <div className="header-links">
-            <Link to="/item">Sell</Link>
-            <Link onClick={handleClick} to="/login">
-              Logout
-            </Link>
-          </div>
+          <Link to="/item">Sell</Link>
+          <Link onClick={handleClick} to="/login">
+            Logout
+          </Link>
         </>
       )}
     </nav>
