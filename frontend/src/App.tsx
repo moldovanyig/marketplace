@@ -22,25 +22,27 @@ function App() {
     <Provider store={store}>
       <BrowserRouter>
         <Header />
-        <Switch>
-          <Route path="/login">
-            <Login />
-          </Route>
-          <Route path="/registration">
-            <Registration />
-          </Route>
-          <Route path="/item">
-            <AddItem />
-          </Route>
-          <Route exact path="/">
-            <Homepage />
-            <ItemById />
-            <ItemsByList />
-          </Route>
-          <Route>
-            <NotImplemented />
-          </Route>
-        </Switch>
+        <div className="main-wrapper">
+          <Switch>
+            <Route path="/login">
+              <Login />
+            </Route>
+            <Route path="/registration">
+              <Registration />
+            </Route>
+            <Route path="/item">
+              <AddItem />
+            </Route>
+            <Route exact path="/">
+              <Homepage />
+              <ItemById />
+              <ItemsByList />
+            </Route>
+            <Route>
+              <NotImplemented />
+            </Route>
+          </Switch>
+        </div>
       </BrowserRouter>
     </Provider>
   );
