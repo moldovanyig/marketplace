@@ -84,8 +84,8 @@ const Homepage: React.FunctionComponent<HomepageProps> = ({
 
   return (
     <div>
-      <Heading className={'login-title'} label="Search by details" />
       <form onSubmit={handleListSubmit}>
+        <Heading label="Search by details" />
         <Input
           type="text"
           placeholder="title"
@@ -118,8 +118,8 @@ const Homepage: React.FunctionComponent<HomepageProps> = ({
         <Message message={messageList} isValid={validList} />
         <Btn label="Search" />
       </form>
-      <Heading className={'login-title'} label="Search by id" />
       <form onSubmit={handleIdSubmit}>
+        <Heading label="Search by id" />
         <Input
           type="text"
           placeholder="id"

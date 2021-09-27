@@ -126,8 +126,8 @@ const AddItem: React.FunctionComponent<AddItemProps> = () => {
   }
   return (
     <div className="center-middle">
-      <Heading className={'add-item-title'} label={'Add new item'} />
-      <form className="add-item-form" onSubmit={handleSubmit}>
+      <Heading label={'Add new item'} />
+      <form onSubmit={handleSubmit}>
         <Input
           type="text"
           placeholder="title"

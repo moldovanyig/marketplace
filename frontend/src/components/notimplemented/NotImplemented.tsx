@@ -10,7 +10,7 @@ const NotImplemented: React.FunctionComponent = () => {
   };
   return (
     <div className="center-middle">
-      <Heading className="not-implemented-title" label="Not implemented yet" />
+      <Heading label="Not implemented yet" />
       <Btn label="Go home" onClick={handleClick} />
     </div>
   );
