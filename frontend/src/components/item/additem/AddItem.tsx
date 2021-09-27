@@ -182,7 +182,10 @@ const AddItem: React.FunctionComponent<AddItemProps> = () => {
           }
         />
         <Message message={message} isValid={valid} />
-        <Btn label="add new item" />
+        <div className="douple-buttons">
+          <Btn label="add new item" />
+          <Btn label="back" onClick={() => history.push('/')} />
+        </div>
       </form>
     </div>
   );
